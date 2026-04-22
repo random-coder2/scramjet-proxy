@@ -13,7 +13,6 @@
       <stop offset="100%" style="stop-color:#7b2cbf"/>
     </linearGradient>
     <style>
-      @import url('data:text/css;base64,*eyJmb250LWZhbWlseSI6Ii1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJ1NlZ29lIFVJJywgUm9ib3RvLCBzYW5zLXNlcmlmIiwiY29sb3IiOiIjZmZmIn0=');
       .container { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
       text { fill: #fff; }
       .title { font-size: 32px; font-weight: bold; }
