@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scramjet Proxy</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Scramjet Proxy</h1>
+            <p>Powered by Mercury Workshop</p>
+        </header>
+
+        <main>
+            <div class="proxy-box">
+                <input 
+                    type="text" 
+                    id="url-input" 
+                    placeholder="Enter URL (e.g., https://example.com)"
+                    autocomplete="off"
+                >
+                <button id="go-btn">Go</button>
+            </div>
+
+            <div id="status" class="status hidden">
+                <span class="spinner"></span>
+                <span id="status-text">Initializing...</span>
+            </div>
+
+            <div class="info">
+                <h3>How to use:</h3>
+                <ol>
+                    <li>Enter any URL in the box above</li>
+                    <li>Click "Go" or press Enter</li>
+                    <li>Browse freely through the proxy</li>
+                </ol>
+                <p class="note">
+                    <strong>Note:</strong> This proxy uses Scramjet to bypass internet censorship.
+                </p>
+            </div>
+        </main>
+
+        <footer>
+            <p>Powered by <a href="https://github.com/MercuryWorkshop/scramjet" target="_blank">Scramjet</a></p>
+        </footer>
+    </div>
+
+    <!-- Load BareMux first -->
+    <script src="https://unpkg.com/@mercuryworkshop/bare-mux@2.1.5/dist/index.js"></script>
+    <!-- Load libcurl transport -->
+    <script src="https://unpkg.com/@mercuryworkshop/libcurl-transport@2.0.5/dist/index.mjs" type="module"></script>
+    <!-- Load Scramjet -->
+    <script src="https://unpkg.com/@mercuryworkshop/scramjet@1.0.2/dist/scramjet.bundle.js"></script>
+    <!-- Main app -->
+    <script src="app.js"></script>
+</body>
+</html>
