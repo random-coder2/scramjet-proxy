@@ -1,0 +1,197 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 800 600">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e"/>
+      <stop offset="100%" style="stop-color:#16213e"/>
+    </linearGradient>
+    <linearGradient id="title" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00d4ff"/>
+      <stop offset="100%" style="stop-color:#7b2cbf"/>
+    </linearGradient>
+    <linearGradient id="btn" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00d4ff"/>
+      <stop offset="100%" style="stop-color:#7b2cbf"/>
+    </linearGradient>
+    <style>
+      @import url('data:text/css;base64,*eyJmb250LWZhbWlseSI6Ii1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJ1NlZ29lIFVJJywgUm9ib3RvLCBzYW5zLXNlcmlmIiwiY29sb3IiOiIjZmZmIn0=');
+      .container { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+      text { fill: #fff; }
+      .title { font-size: 32px; font-weight: bold; }
+      .subtitle { font-size: 14px; fill: #888; }
+      .label { font-size: 12px; fill: #aaa; }
+      input { 
+        font-size: 14px; 
+        padding: 10px; 
+        border: 2px solid #333; 
+        border-radius: 8px; 
+        background: #0f0f1a; 
+        color: #fff;
+        width: 100%;
+      }
+      input:focus { outline: none; border-color: #00d4ff; }
+      button {
+        font-size: 14px;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+        color: #fff;
+        cursor: pointer;
+        font-weight: bold;
+      }
+      .info-box {
+        fill: #0f0f1a;
+        stroke: #333;
+        stroke-width: 1;
+      }
+      .info-title { font-size: 16px; fill: #00d4ff; font-weight: bold; }
+      .info-text { font-size: 12px; fill: #ccc; }
+      .note-text { font-size: 11px; fill: #888; }
+    </style>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bg)"/>
+  
+  <!-- Header -->
+  <text x="400" y="50" text-anchor="middle" class="title" fill="url(#title)">Scramjet Proxy</text>
+  <text x="400" y="75" text-anchor="middle" class="subtitle">Powered by Mercury Workshop</text>
+  
+  <!-- Backend URL Input -->
+  <text x="100" y="110" class="label">Proxy Backend:</text>
+  <foreignObject x="100" y="120" width="600" height="45">
+    <input xmlns="http://www.w3.org/1999/xhtml" type="text" id="backend" value="http://129.146.87.206:8080" placeholder="http://your-server:8080" style="font-size: 13px;"/>
+  </foreignObject>
+  
+  <!-- Target URL Input -->
+  <text x="100" y="185" class="label">URL to Browse:</text>
+  <foreignObject x="100" y="195" width="500" height="45">
+    <input xmlns="http://www.w3.org/1999/xhtml" type="text" id="url" placeholder="https://example.com" style="font-size: 14px;"/>
+  </foreignObject>
+  
+  <!-- Go Button -->
+  <foreignObject x="610" y="195" width="90" height="45">
+    <button xmlns="http://www.w3.org/1999/xhtml" id="go" style="width: 100%; height: 100%;">Go</button>
+  </foreignObject>
+  
+  <!-- Status -->
+  <g id="status-group" style="display: none;">
+    <rect x="100" y="260" width="600" height="40" fill="#0f0f1a" stroke="#333" rx="8"/>
+    <circle cx="130" cy="280" r="10" fill="none" stroke="#00d4ff" stroke-width="2" stroke-dasharray="20">
+      <animateTransform attributeName="transform" type="rotate" from="0 130 280" to="360 130 280" dur="1s" repeatCount="indefinite"/>
+    </circle>
+    <text id="status-text" x="160" y="285" font-size="14" fill="#fff">Loading...</text>
+  </g>
+  
+  <!-- Info Box -->
+  <rect x="100" y="320" width="600" height="180" class="info-box" rx="10"/>
+  <text x="120" y="355" class="info-title">How to use:</text>
+  <text x="140" y="380" class="info-text">1. Enter your proxy backend URL (or use default)</text>
+  <text x="140" y="400" class="info-text">2. Enter the URL you want to browse</text>
+  <text x="140" y="420" class="info-text">3. Click "Go" or press Enter</text>
+  <text x="140" y="440" class="info-text">4. Browse freely through the proxy</text>
+  
+  <line x1="120" y1="460" x2="680" y2="460" stroke="#333" stroke-width="1"/>
+  <text x="120" y="485" class="note-text">
+    <tspan font-weight="bold" fill="#00d4ff">Note:</tspan> This proxy uses Scramjet to bypass internet censorship.
+  </text>
+  
+  <!-- Iframe for proxy content -->
+  <foreignObject id="proxy-container" x="100" y="260" width="600" height="280" style="display: none;">
+    <iframe xmlns="http://www.w3.org/1999/xhtml" id="proxy-frame" style="width: 100%; height: 100%; border: none; border-radius: 10px; background: #fff;" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-top-navigation allow-downloads"></iframe>
+  </foreignObject>
+  
+  <!-- JavaScript -->
+  <script type="text/javascript">
+    <![CDATA[
+    (function() {
+      'use strict';
+      
+      var backendInput = document.getElementById('backend');
+      var urlInput = document.getElementById('url');
+      var goBtn = document.getElementById('go');
+      var statusGroup = document.getElementById('status-group');
+      var statusText = document.getElementById('status-text');
+      var infoBox = document.querySelector('.info-box');
+      var infoTexts = document.querySelectorAll('.info-title, .info-text, .note-text');
+      var infoLine = document.querySelector('line');
+      var proxyContainer = document.getElementById('proxy-container');
+      var proxyFrame = document.getElementById('proxy-frame');
+      
+      function showStatus(text) {
+        statusGroup.style.display = 'block';
+        statusText.textContent = text;
+      }
+      
+      function hideStatus() {
+        statusGroup.style.display = 'none';
+      }
+      
+      function navigate() {
+        var url = urlInput.value.trim();
+        var backend = backendInput.value.trim();
+        
+        if (!url) {
+          showStatus('Please enter a URL');
+          return;
+        }
+        
+        if (!backend) {
+          backend = window.location.origin;
+        }
+        backend = backend.replace(/\/$/, '');
+        
+        if (!url.match(/^https?:\/\//)) {
+          url = 'https://' + url;
+        }
+        
+        showStatus('Loading ' + url + '...');
+        
+        try {
+          // Base64 encode
+          var base64 = btoa(url);
+          var encoded = backend + '/~/' + base64;
+          
+          console.log('Encoded:', encoded);
+          
+          // Hide info elements
+          infoBox.style.display = 'none';
+          for (var i = 0; i < infoTexts.length; i++) {
+            infoTexts[i].style.display = 'none';
+          }
+          if (infoLine) infoLine.style.display = 'none';
+          
+          // Show iframe
+          proxyContainer.style.display = 'block';
+          proxyFrame.setAttribute('src', encoded);
+          hideStatus();
+        } catch (e) {
+          showStatus('Error: ' + e.message);
+        }
+      }
+      
+      goBtn.addEventListener('click', navigate);
+      urlInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') navigate();
+      });
+      
+      // Parse hash for config
+      var hash = window.location.hash;
+      if (hash && hash.length > 1) {
+        var config = hash.substring(1);
+        var parts = config.split('/');
+        for (var j = 0; j < parts.length; j++) {
+          var kv = parts[j].split('=');
+          if (kv[0] === 'backend' && kv[1]) {
+            backendInput.value = decodeURIComponent(kv[1]);
+          }
+          if (kv[0] === 'url' && kv[1]) {
+            urlInput.value = decodeURIComponent(kv[1]);
+            navigate();
+          }
+        }
+      }
+    })();
+    ]]>
+  </script>
+</svg>

@@ -4,15 +4,24 @@ A standalone HTML proxy client that connects to a Scramjet proxy backend.
 
 ## Quick Start
 
-### Option 1: jsDelivr CDN (Recommended)
-
-Once this repo is published to GitHub, access via:
+### Option 1: jsDelivr CDN - HTML Version
 
 ```
-https://cdn.jsdelivr.net/gh/YOUR_USERNAME/scramjet-proxy-client@main/index.html
+https://cdn.jsdelivr.net/gh/YOUR_USERNAME/scramjet-proxy@main/dist/index.html
 ```
 
-Replace `YOUR_USERNAME` with your actual GitHub username.
+### Option 2: jsDelivr CDN - SVG Version (Stealth Mode)
+
+The SVG version looks like an image but is fully functional:
+
+```
+https://cdn.jsdelivr.net/gh/YOUR_USERNAME/scramjet-proxy@main/dist/index.svg
+```
+
+**With pre-filled config via hash:**
+```
+https://cdn.jsdelivr.net/gh/YOUR_USERNAME/scramjet-proxy@main/dist/index.svg#/backend=http://your-server:8080/url=https://example.com
+```
 
 ### Option 2: Download and Open Locally
 
