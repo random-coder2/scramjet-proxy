@@ -30,6 +30,15 @@ app.use(express.static(path.join(__dirname, 'public'), {
     }
 }));
 
+// Serve dist folder (for GitHub Pages compatibility)
+app.use('/dist', express.static(path.join(__dirname, 'dist'), {
+    setHeaders: (res, path) => {
+        if (path.endsWith('.svg')) {
+            res.setHeader('Content-Type', 'image/svg+xml');
+        }
+    }
+}));
+
 // Proxy libcurl transport files from unpkg
 app.get('/libcurl/*', async (req, res) => {
     const filePath = req.params[0];

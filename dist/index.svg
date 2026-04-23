@@ -73,6 +73,14 @@
     <button xmlns="http://www.w3.org/1999/xhtml" id="go" style="width: 100%; height: 100%;">Go</button>
   </foreignObject>
   
+  <!-- Open in New Tab Checkbox -->
+  <foreignObject x="100" y="245" width="200" height="30">
+    <label xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 13px; color: #aaa;">
+      <input type="checkbox" id="newtab" style="cursor: pointer;">
+      <span>Open in new tab</span>
+    </label>
+  </foreignObject>
+  
   <!-- Status -->
   <g id="status-group" style="display: none;">
     <rect x="100" y="260" width="600" height="40" fill="#0f0f1a" stroke="#333" rx="8"/>
@@ -109,6 +117,7 @@
       var backendInput = document.getElementById('backend');
       var urlInput = document.getElementById('url');
       var goBtn = document.getElementById('go');
+      var newTabCheckbox = document.getElementById('newtab');
       var statusGroup = document.getElementById('status-group');
       var statusText = document.getElementById('status-text');
       var infoBox = document.querySelector('.info-box');
@@ -152,6 +161,13 @@
           var encoded = backend + '/~/' + base64;
           
           console.log('Encoded:', encoded);
+          
+          // Check if open in new tab
+          if (newTabCheckbox && newTabCheckbox.checked) {
+            window.open(encoded, '_blank');
+            hideStatus();
+            return;
+          }
           
           // Hide info elements
           infoBox.style.display = 'none';
