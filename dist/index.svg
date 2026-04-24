@@ -76,7 +76,7 @@
   <!-- Open in New Tab Checkbox -->
   <foreignObject x="100" y="245" width="200" height="30">
     <label xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 13px; color: #aaa;">
-      <input type="checkbox" id="newtab" style="cursor: pointer;">
+      <input type="checkbox" id="newtab" style="cursor: pointer;"/>
       <span>Open in new tab</span>
     </label>
   </foreignObject>
