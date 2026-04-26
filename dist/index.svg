@@ -149,6 +149,22 @@
         }
         backend = backend.replace(/\/$/, '');
         
+        // Auto-detect protocol mismatch
+        var pageProtocol = window.location.protocol; // 'https:' or 'http:'
+        var backendProtocol = backend.match(/^https?:\/\//) ? backend.split(':')[0] + ':' : 'http:';
+        
+        if (pageProtocol === 'https:' && backendProtocol === 'http:') {
+          showStatus('⚠️ Protocol mismatch: This page is HTTPS but backend is HTTP. Opening in new tab to avoid browser blocking.', true);
+          // Force open in new tab
+          if (!url.match(/^https?:\/\//)) {
+            url = 'https://' + url;
+          }
+          var base64 = btoa(url);
+          var encoded = backend + '/~/' + base64;
+          window.open(encoded, '_blank');
+          return;
+        }
+        
         if (!url.match(/^https?:\/\//)) {
           url = 'https://' + url;
         }
